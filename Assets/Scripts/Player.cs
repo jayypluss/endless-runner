@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     private bool isSliding = false;
     private bool isSwiping = false;
 
+
     private Vector3 verticalTargetPosition;
     private Vector3 boxColliderSize;
     private Vector2  startingTouch;
@@ -46,23 +47,21 @@ public class Player : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-
             ChangeLane(1);
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-
             Jump();
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-
             Slide();
         }
+        
 
         if (Input.touchCount == 1)
         {
-            if (isSwiping)
+            if (isSwiping) 
             {
                 Vector2 diff = Input.GetTouch(0).position - startingTouch;
                 diff = new Vector2(diff.x / Screen.width, diff.y / Screen.width);
@@ -87,6 +86,52 @@ public class Player : MonoBehaviour
                         }
                         else
                         {
+                            ChangeLane(1);
+                        }
+                    }
+
+                    isSwiping = false;
+                }
+            }
+
+            if (Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                startingTouch = Input.GetTouch(0).position;
+                isSwiping = true;
+            } else if (Input.GetTouch(0).phase == TouchPhase.Ended)
+            {
+                isSwiping = false;
+            }
+
+        }
+
+        if (Input.touchCount == 1)
+        {
+            if (isSwiping)
+            {
+                Vector2 diff = Input.GetTouch(0).position - startingTouch;
+                diff = new Vector2(diff.x / Screen.width, diff.y / Screen.width);
+                if (diff.magnitude > 0.01f)
+                {
+                    if (Mathf.Abs(diff.y) > Mathf.Abs(diff.x))
+                    {
+                        if (diff.y < 0)
+                        {
+                            Slide();
+                        }
+                        else
+                        {
+                            Jump();
+                        }
+                        }
+                        else
+                        {
+                            if (diff.x < 0)
+                            {
+                                ChangeLane(-1);
+                        }
+                        else
+                        {
                         ChangeLane(1); 
                         }
                     }
@@ -105,6 +150,7 @@ public class Player : MonoBehaviour
         {
             isSwiping = false;
         }
+
 
         if (isJumping)
         {
@@ -165,7 +211,7 @@ public class Player : MonoBehaviour
 
     private void Slide()
     {
-        if (!isJumping && isSliding)
+        if (!isJumping && !isSliding)
         {
             slideStart = transform.position.z;
             anim.SetFloat("JumpSpeed", speed / slideLength);
