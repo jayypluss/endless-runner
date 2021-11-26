@@ -2171,6 +2171,9 @@ MonoBehaviour:
   - {fileID: 1000013842435444, guid: d68ac797bf384f84bbca159dc2a6e4d7, type: 3}
   numberOfObstacles: {x: 15, y: 20}
   newObstacles: []
+  coin: {fileID: 1529914401280746740, guid: 1e5bd2a08c9af2944a032fe3b908573d, type: 3}
+  numberOfCoins: {x: 50, y: 80}
+  newCoins: []
 --- !u!65 &1205018826
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3166,6 +3169,9 @@ MonoBehaviour:
   - {fileID: 1000013842435444, guid: d68ac797bf384f84bbca159dc2a6e4d7, type: 3}
   numberOfObstacles: {x: 15, y: 20}
   newObstacles: []
+  coin: {fileID: 1529914401280746740, guid: 1e5bd2a08c9af2944a032fe3b908573d, type: 3}
+  numberOfCoins: {x: 50, y: 80}
+  newCoins: []
 --- !u!65 &1802976945
 BoxCollider:
   m_ObjectHideFlags: 0

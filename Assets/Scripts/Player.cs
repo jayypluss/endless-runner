@@ -144,41 +144,41 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Input.touchCount == 1)
-        {
-            if (isSwiping)
-            {
-                Vector2 diff = Input.GetTouch(0).position - startingTouch;
-                diff = new Vector2(diff.x / Screen.width, diff.y / Screen.width);
-                if (diff.magnitude > 0.01f)
-                {
-                    if (Mathf.Abs(diff.y) > Mathf.Abs(diff.x))
-                    {
-                        if (diff.y < 0)
-                        {
-                            Slide();
-                        }
-                        else
-                        {
-                            Jump();
-                        }
-                        }
-                        else
-                        {
-                            if (diff.x < 0)
-                            {
-                                ChangeLane(-1);
-                        }
-                        else
-                        {
-                        ChangeLane(1); 
-                        }
-                    }
+        // if (Input.touchCount == 1)
+        // {
+        //     if (isSwiping)
+        //     {
+        //         Vector2 diff = Input.GetTouch(0).position - startingTouch;
+        //         diff = new Vector2(diff.x / Screen.width, diff.y / Screen.width);
+        //         if (diff.magnitude > 0.01f)
+        //         {
+        //             if (Mathf.Abs(diff.y) > Mathf.Abs(diff.x))
+        //             {
+        //                 if (diff.y < 0)
+        //                 {
+        //                     Slide();
+        //                 }
+        //                 else
+        //                 {
+        //                     Jump();
+        //                 }
+        //                 }
+        //                 else
+        //                 {
+        //                     if (diff.x < 0)
+        //                     {
+        //                         ChangeLane(-1);
+        //                 }
+        //                 else
+        //                 {
+        //                 ChangeLane(1); 
+        //                 }
+        //             }
 
-                    isSwiping = false;
-                }
-            }
-        }
+        //             isSwiping = false;
+        //         }
+        //     }
+        // }
 
         if (isSliding)
         {
@@ -190,16 +190,19 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Input.GetTouch(0).phase == TouchPhase.Began)
+        if (Input.touchCount > 0)
         {
-            startingTouch = Input.GetTouch(0).position;
-            isSwiping = true;
-        }
-        else if (Input.GetTouch(0).phase == TouchPhase.Ended)
-        {
-            isSwiping = false;
-        }
+            if (Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                startingTouch = Input.GetTouch(0).position;
+                isSwiping = true;
+            }
+            else if (Input.GetTouch(0).phase == TouchPhase.Ended)
+            {
+                isSwiping = false;
+            }
 
+        }
 
         Vector3 targetPosition = new Vector3(verticalTargetPosition.x, verticalTargetPosition.y, transform.position.z);
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, laneSpeed * Time.deltaTime);
