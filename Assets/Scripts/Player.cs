@@ -27,6 +27,8 @@ public class Player : MonoBehaviour
     private int currentLane = 1;
     private int currentLife;
     static int blinkingValue;
+    private int coins;
+    
     private float jumpStart;
     private float slideStart;
 
@@ -249,6 +251,14 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Coin"))
+        {
+            coins++;
+            uiManager.UpdateCoins(coins);
+            other.transform.parent.gameObject.SetActive(false);
+        }
+        
+
         if (invincible)
             return;
              
@@ -260,7 +270,10 @@ public class Player : MonoBehaviour
             speed = 0;
             if (currentLife <= 0)
             {
-                // Game Over
+                speed = 0;
+                anim.SetBool("Dead", true);
+                uiManager.gameOverPanel.SetActive(true);
+                Invoke("CallMenu", 2f);
             }
             else
             {
@@ -280,7 +293,7 @@ public class Player : MonoBehaviour
         // * Comment this line in
         // bool enabled = false;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.25f);
         speed = minSpeed;
         while (timer < time && invincible)
         {
@@ -306,5 +319,10 @@ public class Player : MonoBehaviour
         // * Comment next line out
         Shader.SetGlobalFloat(blinkingValue, 0);
         invincible = false;
+    }
+
+    void CallMenu()
+    {
+        GameManager.gm.EndRun();
     }
 }

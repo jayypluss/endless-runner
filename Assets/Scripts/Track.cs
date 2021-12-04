@@ -44,6 +44,9 @@ public class Track : MonoBehaviour
 
             newObstacles[i].transform.localPosition = new Vector3(0, 0, Random.Range(posZMin, posZMax));
             newObstacles[i].SetActive(true);
+
+            if (newObstacles[i].GetComponent<ChangeLane>() != null)
+                newObstacles[i].GetComponent<ChangeLane>().PositionLane();
         }
     }
 
@@ -57,6 +60,7 @@ public class Track : MonoBehaviour
             
             newCoins[i].transform.localPosition = new Vector3(transform.position.x, transform.position.y, randomZPos);
             newCoins[i].SetActive(true);
+            newCoins[i].GetComponent<ChangeLane>().PositionLane();
             minZPos = randomZPos + 1;
         }
     }
