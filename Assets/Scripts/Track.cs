@@ -69,6 +69,8 @@ public class Track : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("Passed through Track of ID: " + this.GetInstanceID());
+            other.GetComponent<Player>().IncreaseSpeed();
             transform.position = new Vector3(0, 0, transform.position.z + 297 * 2);
             AddObstacles();
             AddCoins();

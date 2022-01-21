@@ -8,7 +8,7 @@ PlayerSettings:
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
-  defaultScreenOrientation: 0
+  defaultScreenOrientation: 2
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
@@ -134,7 +134,7 @@ PlayerSettings:
     16:10: 0
     16:9: 0
     Others: 0
-  bundleVersion: 1.0
+  bundleVersion: 1.1
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -250,8 +250,8 @@ PlayerSettings:
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 2
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: '{inproject}: '
-  AndroidKeyaliasName: 
+  AndroidKeystoreName: D:/Desktop/endless_runner.keystore
+  AndroidKeyaliasName: endless_runner
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
   AndroidIsGame: 1
@@ -777,11 +777,11 @@ PlayerSettings:
   m_MobileRenderingPath: 1
   metroPackageName: EndlessRunner
   metroPackageVersion: 1.0.0.0
-  metroCertificatePath: 
+  metroCertificatePath: B:\Unity\Projects\endless-runner\Assets\WSATestCertificate.pfx
   metroCertificatePassword: 
-  metroCertificateSubject: 
-  metroCertificateIssuer: 
-  metroCertificateNotAfter: 0000000000000000
+  metroCertificateSubject: jayypluss studios
+  metroCertificateIssuer: jayypluss studios
+  metroCertificateNotAfter: 8013552b1f2ed901
   metroApplicationDescription: EndlessRunner
   wsaImages: {}
   metroTileShortName: Trash Dash

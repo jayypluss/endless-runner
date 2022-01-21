@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     public float minSpeed = 10f;
     public float maxSpeed = 30f;
     public float invincibleTime;
+    [HideInInspector]
+    public float score = 0;
     public int maxLife = 3;
 
     // For blinking using other shaders that don't have _BlinkingValue *
@@ -27,7 +29,9 @@ public class Player : MonoBehaviour
     private int currentLane = 1;
     private int currentLife;
     static int blinkingValue;
-    private int coins;
+
+    [HideInInspector]
+    public int coins;
     
     private float jumpStart;
     private float slideStart;
@@ -36,6 +40,7 @@ public class Player : MonoBehaviour
     private bool isSliding = false;
     private bool isSwiping = false;
     private bool invincible = false;
+    private bool canMove = false;
 
 
     private Vector3 verticalTargetPosition;
@@ -51,16 +56,24 @@ public class Player : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         boxCollider = GetComponent<BoxCollider>();
         boxColliderSize = boxCollider.size;
-        anim.Play("runStart");
+
         currentLife = maxLife;
-        speed = minSpeed;
+
         blinkingValue = Shader.PropertyToID("_BlinkingValue");
         uiManager = FindObjectOfType<UIManager>();
+        GameManager.gm.StartMissions();
+
+        Invoke("StartRun", 3f);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!canMove)
+            return;
+
+        score += Time.deltaTime * speed;
+        uiManager.UpdateScore((int) score);
 
         if (isJumping)
         {
@@ -224,6 +237,13 @@ public class Player : MonoBehaviour
         rb.velocity = Vector3.forward * speed;
     }
 
+    private void StartRun()
+    {
+        anim.Play("runStart");
+        speed = minSpeed;
+        canMove = true;
+    }
+
     private void Jump()
     {
         if (!isJumping)
@@ -264,6 +284,7 @@ public class Player : MonoBehaviour
              
         if (other.CompareTag("Obstacle"))
         {
+            canMove = false;
             currentLife--;
             uiManager.UpdateLives(currentLife);
             anim.SetTrigger("Hit");
@@ -277,9 +298,16 @@ public class Player : MonoBehaviour
             }
             else
             {
+                Invoke("CanMove", 0.733f);
                 StartCoroutine(Blinking(invincibleTime));
             }
         }
+    }
+
+    void CanMove()
+    {
+        if (currentLife > 0) 
+            canMove = true;
     }
 
     IEnumerator Blinking(float time)
@@ -323,6 +351,14 @@ public class Player : MonoBehaviour
 
     void CallMenu()
     {
+        GameManager.gm.coins += coins;
         GameManager.gm.EndRun();
+    }
+
+    public void IncreaseSpeed()
+    {
+        speed *= 1.15f;
+        if (speed > maxSpeed)
+            speed = maxSpeed;
     }
 }
